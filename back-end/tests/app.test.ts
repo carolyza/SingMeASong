@@ -101,3 +101,72 @@ describe("POST /recommendation/:id/downvote", () => {
     expect(result).toBeNull();
   });
 });
+
+describe("GET /recommendations", () => {
+  it("returns 200 and an object with recommendations", async () => {
+    const data = await create();
+
+    const { status, body } = await supertest(app).get(`/recommendations`);
+
+    expect(status).toEqual(200);
+    expect(body.length > 0).toBe(true);
+  });
+});
+
+describe("GET /recommendations/random", () => {
+  it("returns 200 and an object with random recommendations", async () => {
+    const data = await create();
+
+    const { status, body } = await supertest(app).get(
+      `/recommendations/random`
+    );
+
+    expect(status).toEqual(200);
+    expect(typeof body).toBe("object");
+  });
+});
+
+describe("GET /recommendations/top/:amount", () => {
+  it("returns 200 given the amount of top recommendations", async () => {
+    const qntd = 3;
+
+    const data = await Promise.all(
+      _.times(15, async () => {
+        return await create({
+          score: faker.datatype.number({ min: qntd }),
+        });
+      })
+    );
+
+    const array = _.take(_.orderBy(data, ["score"], ["desc"]), 3);
+
+    const { status, body } = await supertest(app).get(
+      `/recommendations/top/${qntd}`
+    );
+
+    expect(status).toEqual(200);
+    expect(body).toEqual(array);
+  });
+});
+
+describe("GET /recommendations/:id", () => {
+  it("returns 200 given a valid id", async () => {
+    const data = await create();
+
+    const { status, body } = await supertest(app).get(
+      `/recommendations/${data.id}`
+    );
+
+    expect(status).toEqual(200);
+    expect(typeof body).toBe("object");
+  });
+
+  it("returns 200 given an invalid id", async () => {
+    const id = 99999999;
+
+    const { status, body } = await supertest(app).get(`/recommendations/${id}`);
+
+    expect(status).toEqual(404);
+    expect(body).toEqual({});
+  });
+});

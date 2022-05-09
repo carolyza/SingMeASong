@@ -19,7 +19,7 @@ function findAll(findAllWhere?: FindAllWhere) {
   return prisma.recommendation.findMany({
     where: filter,
     orderBy: { id: "desc" },
-    take: 10
+    take: 10,
   });
 }
 
@@ -69,6 +69,27 @@ async function remove(id: number) {
   });
 }
 
+async function truncate() {
+  await prisma.$executeRaw`TRUNCATE TABLE recommendations;`;
+}
+
+async function seed() {
+  await prisma.recommendation.createMany({
+    data: [
+      {
+        name: "Avril Lavigne - Complicated",
+        youtubeLink: "https://www.youtube.com/watch?v=5NPBIwQyPWE",
+        score: 0,
+      },
+      {
+        name: "Paramore - Misery Business",
+        youtubeLink: "https://www.youtube.com/watch?v=aCyGvGEtOwc",
+        score: 10,
+      },
+    ],
+  });
+}
+
 export const recommendationRepository = {
   create,
   findAll,
@@ -77,4 +98,6 @@ export const recommendationRepository = {
   updateScore,
   getAmountByScore,
   remove,
+  truncate,
+  seed,
 };

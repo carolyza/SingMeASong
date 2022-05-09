@@ -3,7 +3,7 @@ import { recommendationService } from "../../src/services/recommendationsService
 import { faker } from "@faker-js/faker";
 import { jest } from "@jest/globals";
 import _ from "lodash";
-import { conflictError, notFoundError } from "../../src/utils/errorUtils.js";
+import { notFoundError } from "../../src/utils/errorUtils.js";
 
 beforeEach(() => {
   jest.restoreAllMocks();

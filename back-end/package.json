@@ -5,10 +5,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/server.ts ",
-    "test": "NODE_OPTIONS=--experimental-vm-modules dotenv -e .env.test jest"
-  },
-  "keywords": [],
+    "dev": "nodemon src/server.ts",
+      "test": "NODE_OPTIONS=--experimental-vm-modules dotenv -e .env.test jest "},
   "author": "",
   "license": "ISC",
   "devDependencies": {

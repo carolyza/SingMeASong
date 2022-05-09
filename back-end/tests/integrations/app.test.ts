@@ -1,9 +1,9 @@
 import { faker } from "@faker-js/faker";
 import _ from "lodash";
 import supertest from "supertest";
-import { prisma } from "../src/database.js";
-import app from "../src/app.js";
-import { create, load } from "../tests/factories/recommendationFactory.js";
+import { prisma } from "../../src/database.js";
+import app from "../../src/app.js";
+import { create, load } from "../factories/recommendationFactory.js";
 
 beforeEach(truncateAll);
 

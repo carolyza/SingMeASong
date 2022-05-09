@@ -3,7 +3,10 @@ import { faker } from "@faker-js/faker";
 import { recommendationRepository } from "../../src/repositories/recommendationRepository.js";
 import { recommendationService } from "../../src/services/recommendationsService.js";
 import { conflictError } from "../../src/utils/errorUtils.js";
-import { create } from "../factories/recommendationFactory.js";
+
+beforeEach(() => {
+  jest.restoreAllMocks();
+});
 
 describe("Create recommendation", () => {
   it("should call the create function given a valid body", async () => {
